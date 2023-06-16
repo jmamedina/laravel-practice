@@ -14,7 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ProjectController::class, 'getAllDepartments']);
+//show all the departments
+Route::get('/', [ProjectController::class, 'getAllDepartments'])->name('home');
+
+//show the appointments
+Route::post('/showAppointments', [ProjectController::class, 'showAppointments'])->name('showAppointments')->middleware('auth');
+
+//add the booking appoint, middleware auth prevents the users who are not logged in from booking .
+Route::post('/bookAppointment', [ProjectController::class, 'bookAppointment'])->name('bookAppointment')->middleware('auth');
+
+//show my bookings
+Route::get('/myBookings', [ProjectController::class,'myBookings'])->name('myBookings')->middleware('auth');
+
+//cancel bookings
+Route::post('/cancelBooking', [ProjectController::class,'cancelBooking'])->name('cancelBooking')->middleware('auth');
+
 
 Route::middleware([
     'auth:sanctum',
